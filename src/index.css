@@ -1,0 +1,242 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-arch-bg text-arch-text-primary font-inter;
+  }
+
+  h1, h2, h3 {
+    @apply font-space-mono;
+  }
+}
+
+@layer components {
+  .grid-pattern {
+    background-image:
+      linear-gradient(0deg, transparent 24%, rgba(26, 29, 31, 0.05) 25%, rgba(26, 29, 31, 0.05) 26%, transparent 27%, transparent 74%, rgba(26, 29, 31, 0.05) 75%, rgba(26, 29, 31, 0.05) 76%, transparent 77%, transparent),
+      linear-gradient(90deg, transparent 24%, rgba(26, 29, 31, 0.05) 25%, rgba(26, 29, 31, 0.05) 26%, transparent 27%, transparent 74%, rgba(26, 29, 31, 0.05) 75%, rgba(26, 29, 31, 0.05) 76%, transparent 77%, transparent);
+    background-size: 32px 32px;
+  }
+
+  .button-primary {
+    @apply px-6 py-3 border-2 border-arch-accent rounded-arch font-space-mono text-arch-text-primary transition-all duration-150 hover:bg-arch-accent/10;
+  }
+
+  .button-ghost {
+    @apply text-arch-text-primary font-space-mono transition-all duration-150 relative;
+  }
+
+  .button-ghost::after {
+    @apply absolute bottom-0 left-0 w-0 h-px bg-arch-accent transition-all duration-150;
+    content: '';
+  }
+
+  .button-ghost:hover::after {
+    @apply w-full;
+  }
+
+  .label-uppercase {
+    @apply font-jetbrains text-xs uppercase tracking-widest text-arch-accent;
+  }
+
+  .card-bordered {
+    @apply border-2 border-arch-border bg-arch-surface transition-all duration-150 rounded-arch;
+  }
+
+  .card-bordered:hover {
+    @apply border-arch-accent -translate-y-0.5;
+  }
+
+  .mono-text {
+    @apply font-ibm-plex;
+  }
+
+  .section-container {
+    @apply max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24;
+  }
+}
+* {
+  user-select: none;
+  cursor: default;
+}
+
+a, button {
+  cursor: pointer;
+}
+html, body {
+  overflow-x: hidden;
+}
+
+html, body {
+  overflow-y: scroll;
+  scrollbar-width: none;        /* Firefox */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;               /* Chrome, Edge, Opera */
+}
+/* gradient text animation for hero heading */
+.gradient-text {
+  /* gradient: white -> accent -> white */
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,1) 0%,
+    rgba(255,122,58,1) 40%,
+    rgba(255,255,255,1) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent; /* show background through text */
+  animation: gradient-move 6s linear infinite;
+  /* improve sharpness on some browsers */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* subtle soft inner movement (optional shimmer) */
+.gradient-text--shimmer {
+  position: relative;
+  overflow: visible;
+}
+
+/* keyframes */
+@keyframes gradient-move {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* accessibility: disable motion for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .gradient-text {
+    animation: none;
+    background-position: 50% 50%;
+  }
+}
+
+/* Optional: slightly scale letters on hover to feel interactive */
+.gradient-text:hover {
+  transform: translateZ(0); /* improve rendering */
+}
+
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* remove radial glow completely */
+.hero-bg::before {
+  content: "";
+  display: none;
+}
+
+/* orange arc only */
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  width: 180%;
+  height: 40%;
+  left: 50%;
+  top: 75%;              /* move slightly lower so arc is visible but bottom stays black */
+  transform: translateX(-50%);
+  border-radius: 50%;
+
+  /* thin glowing arc like Bolt */
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 120, 60, 0.9) 0%,    /* bright orange edge */
+    rgba(0, 0, 0, 0) 85%           /* fade to black, NOT white */
+  );
+
+  box-shadow: 0 0 60px rgba(255, 120, 60, 0.6); /* arc glow */
+  opacity: 1;
+}
+
+/* starfield layer (small white + warm orange specks) */
+.stars {
+  position: absolute;
+  inset: 0;
+  z-index: 5;                 /* above arc (z:0) and below content (z:20) */
+  pointer-events: none;
+  opacity: 0.9;
+  background-image:
+    /* white tiny stars */
+    radial-gradient(circle at 4% 10%, rgba(255,255,255,0.95) 0.6px, rgba(255,255,255,0.0) 1px),
+    radial-gradient(circle at 12% 40%, rgba(255,255,255,0.9) 0.6px, rgba(255,255,255,0) 1px),
+    radial-gradient(circle at 20% 80%, rgba(255,255,255,0.85) 0.5px, rgba(255,255,255,0) 1px),
+    radial-gradient(circle at 28% 20%, rgba(255,255,255,0.9) 0.6px, rgba(255,255,255,0) 1px),
+    radial-gradient(circle at 36% 62%, rgba(255,255,255,0.85) 0.5px, rgba(255,255,255,0) 1px),
+    radial-gradient(circle at 44% 30%, rgba(255,255,255,0.9) 0.6px, rgba(255,255,255,0) 1px),
+    radial-gradient(circle at 52% 76%, rgba(255,255,255,0.85) 0.5px, rgba(255,255,255,0) 1px),
+    /* warm orange micro stars (sparingly placed) */
+    radial-gradient(circle at 66% 12%, rgba(255,150,90,0.95) 0.9px, rgba(255,150,90,0) 1.6px),
+    radial-gradient(circle at 82% 48%, rgba(255,140,70,0.9) 0.8px, rgba(255,140,70,0) 1.6px),
+    radial-gradient(circle at 90% 80%, rgba(255,130,60,0.9) 0.8px, rgba(255,130,60,0) 1.6px);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  mix-blend-mode: normal;
+}
+
+/* soft animated shimmer — slightly changes opacity to mimic twinkle */
+.stars::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 30%, rgba(255,180,120,0.04), transparent 25%),
+              radial-gradient(circle at 20% 70%, rgba(255,140,80,0.02), transparent 15%);
+  animation: stars-twinkle 6s linear infinite;
+  opacity: 0.95;
+}
+
+@keyframes stars-twinkle {
+  0%   { opacity: 0.85; transform: translateY(0.25px); }
+  25%  { opacity: 0.6; transform: translateY(-0.25px); }
+  50%  { opacity: 0.95; transform: translateY(0.1px); }
+  75%  { opacity: 0.7; transform: translateY(-0.15px); }
+  100% { opacity: 0.85; transform: translateY(0.25px); }
+}
+
+/* accessibility: respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .stars::after { animation: none; opacity: 0.9; transform: none; }
+}
+.animate-float {
+  animation: float 2s infinite ease-in-out;
+}
+
+/* animate vertical movement only */
+@keyframes float {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(5px); }  /* goes up */
+  100% { transform: translateY(0); }      /* goes back to middle */
+}
+
+.animate-float {
+  animation: float 2s ease-in-out infinite;
+  will-change: transform;
+}
+.spade-skill {
+  transition: all 200ms ease;
+}
+
+/* override Tailwind border utility */
+div.spade-skill:hover {
+  border-color: var(--arch-accent) !important;
+}
+
+/* override border variable if Tailwind uses one */
+.spade-skill:hover {
+  --arch-border: var(--arch-accent) !important;
+  background-color: var(--arch-accent);
+  transform: translateY(-6px);
+}
