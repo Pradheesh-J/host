@@ -154,7 +154,7 @@ body::-webkit-scrollbar {
     to bottom,
     rgba(255, 120, 60, 0.9) 0%,    /* bright orange edge */
 
-    rgba(255,255,255,1) 85%,
+    rgba(0,0,0,0) 85%,
   );
 
   box-shadow: 0 0 60px rgba(255, 120, 60, 0.6); /* arc glow */
